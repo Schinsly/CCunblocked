@@ -2103,7 +2103,7 @@ Game.Launch=function()
 		
 		Game.showBackupWarning=function()
 		{
-			Game.Notify(loc("Back up your save!"),loc("Hello again! Just a reminder that you may want to back up your Cookie Clicker save every once in a while.<br>Schinsly's github website may get blocked and you could lose all your cookies.<br>To do so, go to Options and hit \"Export save\" or \"Save to file\"!")+'<div class="line"></div><a style="float:right;" onclick="Game.prefs.showBackupWarning=1;==CLOSETHIS()==">'+loc("")+'</a>',[25,7]);
+			Game.Notify(loc("Back up your save!"),loc("Hello again! Just a reminder that you may want to back up your Cookie Clicker save every once in a while, just in case.<br>To do so, go to Options and hit \"Export save\" or \"Save to file\"!")+'<div class="line"></div><a style="float:right;" onclick="Game.prefs.showBackupWarning=0;==CLOSETHIS()==">'+loc("Don't show this again")+'</a>',[25,7]);
 		}
 		
 		
@@ -2484,7 +2484,7 @@ Game.Launch=function()
 		Game.ExportSave=function()
 		{
 			//if (App) return false;
-			Game.prefs.showBackupWarning=1;
+			Game.prefs.showBackupWarning=0;
 			Game.Prompt('<h3>'+loc("Export save")+'</h3><div class="block">'+loc("This is your save code.<br>Copy it and keep it somewhere safe!")+'</div><div class="block"><textarea id="textareaPrompt" style="width:100%;height:128px;" readonly>'+Game.WriteSave(1)+'</textarea></div>',[loc("All done!")]);//prompt('Copy this text and keep it somewhere safe!',Game.WriteSave(1));
 			l('textareaPrompt').focus();l('textareaPrompt').select();
 		}
@@ -2505,7 +2505,7 @@ Game.Launch=function()
 		Game.FileSave=function()
 		{
 			if (App) return false;
-			Game.prefs.showBackupWarning=1;
+			Game.prefs.showBackupWarning=0;
 			var filename=Game.bakeryName.replace(/[^a-zA-Z0-9]+/g,'')+'Bakery';
 			var text=Game.WriteSave(1);
 			var blob=new Blob([text],{type:'text/plain;charset=utf-8'});
@@ -3303,7 +3303,7 @@ Game.Launch=function()
 					
 					Game.Notify(loc("Game loaded"),'','',1,1);
 					
-					if (!App && Game.prefs.showBackupWarning<=1) Game.showBackupWarning();
+					if (!App && Game.prefs.showBackupWarning==1) Game.showBackupWarning();
 					
 					if (App) App.justLoadedSave();
 				}
