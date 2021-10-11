@@ -12983,7 +12983,8 @@ Game.Launch=function()
 					//ctx.fillRect(-50,-10,100,200);
 					var pic=Game.WINKLERS?'winkler.png':'wrinkler.png';
 					if (Game.prefs.schinsly && Game.season!='christmas') pic=Game.WINKLERS?'winkler.png':'WrinklerSchinsly.png';
-					if (me.type==1) pic=Game.WINKLERS?'shinyWinkler.png':'shinyWrinkler.png';
+					if (me.type==1 && Game.prefs.schinsly) pic=Game.WINKLERS?'shinyWinkler.png':'shinyWrinklerSchinsly.png';
+					else if (me.type==1) pic=Game.WINKLERS?'shinyWinkler.png':'shinyWrinkler.png';
 					else if (Game.season=='christmas' && Game.prefs.schinsly) pic=Game.WINKLERS?'winterWinkler.png':'winterWrinklerSchinsly.png';
 					else if (Game.season=='christmas') pic=Game.WINKLERS?'winterWinkler.png':'winterWrinkler.png';
 					ctx.drawImage(Pic(pic),-sw/2,-10,sw,sh);
