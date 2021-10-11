@@ -2075,6 +2075,7 @@ Game.Launch=function()
 			Game.prefs.notScary=0;//if true, make some of the scary stuff less scary ("eyebrow mode")
 			Game.prefs.fullscreen=0;//if true, Steam game will be fullscreen
 			Game.prefs.screenreader=0;//if true, add some DOM stuff to facilitate screenreader interaction (requires reload)
+			Game.prefs.schinsly=0;//if true, add schinslys mods.
 		}
 		Game.DefaultPrefs();
 		
@@ -2575,6 +2576,7 @@ Game.Launch=function()
 			(Game.prefs.notScary?'1':'0')+
 			(Game.prefs.fullscreen?'1':'0')+
 			(Game.prefs.screenreader?'1':'0')+
+			(Game.prefs.schinsly?'1':'0')+
 			'';
 			str2=pack3(str2);
 			str+=str2+'|';
@@ -2874,6 +2876,7 @@ Game.Launch=function()
 						Game.prefs.notScary=spl[23]?parseInt(spl[23]):0;
 						Game.prefs.fullscreen=spl[24]?parseInt(spl[24]):0;if (App) App.setFullscreen(Game.prefs.fullscreen);
 						Game.prefs.screenreader=spl[25]?parseInt(spl[25]):0;
+						Game.prefs.schinsly=spl[26]?parseInt(spl[26]):0;
 						BeautifyAll();
 						spl=str[4].split(';');//cookies and lots of other stuff
 						Game.cookies=parseFloat(spl[0]);
@@ -6485,6 +6488,7 @@ Game.Launch=function()
 							Game.WriteButton('notScary','notScaryButton',loc("Scary stuff")+OFF,loc("Scary stuff")+ON,0,1)+'<br>'+
 							Game.WriteButton('timeout','timeoutButton',loc("Sleep mode timeout")+ON,loc("Sleep mode timeout")+OFF)+'<label>('+loc("on slower computers, the game will put itself in sleep mode when it's inactive and starts to lag out; offline CpS production kicks in during sleep mode")+')</label><br>'+
 							Game.WriteButton('screenreader','screenreaderButton',loc("Screen reader mode")+ON,loc("Screen reader mode")+OFF,'Game.toSave=true;Game.toReload=true;')+'<label>('+loc("allows optimizations for screen readers; game will reload")+')</label><br>'+
+							Game.WriteButton('schinsly','schinslyButton',loc("Schinsly Mods")+ON,loc("Schinsly Mods")+OFF)+(EN?'<label>(enable some of schinslys mods)</label>':'')+'<br>'+
 						'</div>'+
 						//'<div class="listing">'+Game.WriteButton('autosave','autosaveButton','Autosave ON','Autosave OFF')+'</div>'+
 						(!App?'<div class="listing"><a class="option smallFancyButton" '+Game.clickStr+'="Game.CheckModData();PlaySound(\'snd/tick.mp3\');">'+loc("Check mod data")+'</a><label>('+loc("view and delete save data created by mods")+')</label></div>':'')+
@@ -12978,7 +12982,9 @@ Game.Launch=function()
 					//ctx.scale(Math.pow(s,1.5)*1.25,s);
 					//ctx.fillRect(-50,-10,100,200);
 					var pic=Game.WINKLERS?'winkler.png':'wrinkler.png';
+					if (Game.prefs.schinsly && Game.season!='christmas') pic=Game.WINKLERS?'winkler.png':'WrinklerSchinsly.png';
 					if (me.type==1) pic=Game.WINKLERS?'shinyWinkler.png':'shinyWrinkler.png';
+					else if (Game.season=='christmas' && Game.prefs.schinsly) pic=Game.WINKLERS?'winterWinkler.png':'winterWrinklerSchinsly.png';
 					else if (Game.season=='christmas') pic=Game.WINKLERS?'winterWinkler.png':'winterWrinkler.png';
 					ctx.drawImage(Pic(pic),-sw/2,-10,sw,sh);
 					if (!Game.WINKLERS && Game.prefs.notScary) ctx.drawImage(Pic(Math.sin(Game.T*0.003+i*11+137+Math.sin(Game.T*0.017+i*13))>0.9997?'wrinklerBlink.png':'wrinklerGooglies.png'),-sw/2,-10+1*Math.sin(Game.T*0.2+i*3+1.2),sw,sh);
